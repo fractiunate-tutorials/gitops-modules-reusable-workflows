@@ -1,4 +1,4 @@
-name: Deploy Spring Boot microservice to ECS Fargate
+name: Deploy Terraform Projects to Azure
 
 on:
   workflow_call:
@@ -15,7 +15,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to AWS ECS Fargate
+    name: Deploy to AZ
     runs-on: ubuntu-latest
     environment: ${{ inputs.env || 'dev' }}
     defaults:
