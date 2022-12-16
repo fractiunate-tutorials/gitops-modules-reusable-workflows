@@ -23,7 +23,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
 
     # only execute if PR is merged or manual trigger
-    if: github.event.pull_request.merged || inputs.env != null
+    # if: github.event.pull_request.merged || inputs.env != null
 
     steps:
       - name: Harden Runner
