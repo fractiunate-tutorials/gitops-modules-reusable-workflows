@@ -23,7 +23,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
 
     # only execute if PR is merged or manual trigger
-    # if: github.event.pull_request.merged || inputs.environment != null
+    if: github.event.pull_request.merged || inputs.environment != null
 
     steps:
       # https://github.com/step-security/harden-runner
