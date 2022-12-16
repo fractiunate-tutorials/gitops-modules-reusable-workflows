@@ -1,0 +1,39 @@
+name: Deploy Spring Boot microservice to ECS Fargate
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+        default: 'dev'
+      # working-directory is added to accommodate monorepo.  For multi repo, defaults to '.', current directory
+      working-directory:
+        required: false
+        type: string
+        default: '.'
+
+jobs:
+  deploy:
+    name: Deploy to AWS ECS Fargate
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.env || 'dev' }}
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+
+    # only execute if PR is merged or manual trigger
+    if: github.event.pull_request.merged || inputs.env != null
+
+    steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@248ae51c2e8cc9622ecf50685c8bf7150c6e8813
+        with:
+          egress-policy: audit # TODO: change to 'egress-policy: block' after couple of runs
+
+      - name: Print debug info
+        run: |
+          echo environment is ${{ inputs.env }}
+          echo working_directory is ${{ inputs.working-directory }}
+          echo project version is ${{ env.PROJECT_VERSION }}
+          echo github.event.pull_request.merged is ${{ github.event.pull_request.merged }}
